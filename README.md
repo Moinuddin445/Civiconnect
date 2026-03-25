@@ -1,22 +1,22 @@
-# CivicConnect 🏛️
+# CivicConnect 
 
 CivicConnect is a modern community engagement platform designed to streamline the reporting and resolution of public issues (complaints). It facilitates seamless communication between citizens, government officers, and administrators.
 
-## 🚀 Key Features
+##  Key Features
 
-### 👥 Citizen Portal
+### Citizen Portal
 - **Secure Authentication**: Register and log in as a citizen.
 - **Complaint Submission**: Easy-to-use form to report issues with category selection and optional image attachments.
 - **Location Support**: Attach geographical coordinates to complaints for precise targeting.
 - **Tracking History**: Real-time tracking of complaint status and historical updates.
 
-### 👮 Officer Portal
+###  Officer Portal
 - **Personal Dashboard**: View all tasks assigned by administrators.
 - **Status Management**: Update complaints to 'In Progress', 'Resolved', or 'Closed'.
 - **Field Remarks**: Add processing remarks that citizens can see in real-time.
 - **Visual Evidence**: View images uploaded by citizens to understand the issue better.
 
-### 🔑 Admin Dashboard
+###  Admin Dashboard
 - **Comprehensive Analytics**: High-level overview of total, pending, and resolved issues.
 - **Officer Assignment**: Delegate incoming complaints to specific field officers.
 - **User Management**: Unified view of all registered Citizens, Officers, and Admins.
@@ -24,7 +24,7 @@ CivicConnect is a modern community engagement platform designed to streamline th
 
 ---
 
-## 🛠️ Technology Stack
+##  Technology Stack
 
 ### **Frontend**
 - **React 18** (Vite-based)
@@ -42,7 +42,7 @@ CivicConnect is a modern community engagement platform designed to streamline th
 
 ---
 
-## ⚙️ Setup & Installation
+##  Setup & Installation
 
 ### **Prerequisites**
 - Node.js (v18+)
@@ -72,12 +72,12 @@ CivicConnect is a modern community engagement platform designed to streamline th
 
 ---
 
-## 👤 Default User Roles
+##  Default User Roles
 - **ROLE_CITIZEN**: General public user.
 - **ROLE_OFFICER**: Field staff responsible for resolving issues.
 - **ROLE_ADMIN**: System administrator managing assignments and users.
 
 ---
 
-## 📝 License
+##  License
 This project is for educational/internal use within the CivicConnect ecosystem.
