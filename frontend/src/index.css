@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+/* 
+   CivicConnect Basic Student Design System
+*/
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f3f4f6;
+  color: #111827;
+}
+
+/* Remove all complex animations and effects */
+* {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Custom scrollbar simple */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
