@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.civic.dto.ApiResponse;
 import com.civic.dto.UpdateUserDTO;
-import com.civic.pojos.User;
 import com.civic.services.CitizenService;
 
 import jakarta.validation.Valid;
