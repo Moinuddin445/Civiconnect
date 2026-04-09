@@ -31,6 +31,17 @@ public class Complaint extends BaseEntity {
     private Double latitude;
     private Double longitude;
 
+    // Device GPS (from browser Geolocation API)
+    private Double deviceLatitude;
+    private Double deviceLongitude;
+
+    // Geo-verification status
+    @Column(nullable = false)
+    private Boolean geoVerified = false;
+
+    @Column(length = 500)
+    private String verificationNote;
+
     private String imageUrl;
 
     @ManyToOne(fetch = FetchType.LAZY)

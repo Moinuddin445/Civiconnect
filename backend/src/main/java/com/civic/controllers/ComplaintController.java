@@ -27,9 +27,11 @@ public class ComplaintController {
             @RequestParam("category") ComplaintCategory category,
             @RequestParam(value = "latitude", required = false) Double latitude,
             @RequestParam(value = "longitude", required = false) Double longitude,
+            @RequestParam(value = "deviceLatitude", required = false) Double deviceLatitude,
+            @RequestParam(value = "deviceLongitude", required = false) Double deviceLongitude,
             @RequestParam(value = "image", required = false) MultipartFile image) {
         try {
-            ApiResponse response = complaintService.submitComplaint(citizenId, title, description, category, latitude, longitude, image);
+            ApiResponse response = complaintService.submitComplaint(citizenId, title, description, category, latitude, longitude, deviceLatitude, deviceLongitude, image);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error submitting complaint: " + e.getMessage()));

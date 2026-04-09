@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,9 +20,13 @@ import com.civic.services.CitizenService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.security.access.prepost.PreAuthorize;
+import com.civic.dto.RegisterUserDTO;
+
 @RestController
 @RequestMapping("/api/admin")
 @CrossOrigin()
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public class AdminController {
 
 	// dependecy - AdminService
@@ -53,6 +58,11 @@ public class AdminController {
 	public ResponseEntity<String> deleteAdminProfile(@PathVariable long adminId) {
 		String result = adminService.deleteProfile(adminId);
 		return ResponseEntity.ok(result);
+	}
+
+	@PostMapping("/create-admin")
+	public ResponseEntity<?> createAdmin(@Valid @RequestBody RegisterUserDTO adminDetails) {
+		return ResponseEntity.ok(new ApiResponse(adminService.createAdmin(adminDetails)));
 	}
 
 	/*----------------APIs to manage users------------------- */

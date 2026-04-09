@@ -65,7 +65,13 @@ public class AuthServiceImple implements AuthService {
 		User createdUser = mapper.map(userDetails, User.class);
 		
 		// Ensure role is explicitly set if mapper fails or defaults it
-		createdUser.setRole(userDetails.getRole());
+		com.civic.pojos.UserRoles requestedRole = userDetails.getRole();
+		
+		if (requestedRole == com.civic.pojos.UserRoles.ROLE_ADMIN) {
+			throw new AuthException("Unauthorized: Cannot register Admin accounts via public signup.");
+		}
+		
+		createdUser.setRole(requestedRole);
 
 		// 3. encode password and save
 		createdUser.setPassword(encoder.encode(createdUser.getPassword()));// pwd : encrypted using SHA

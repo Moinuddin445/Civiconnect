@@ -19,6 +19,10 @@ public class ComplaintRespDTO {
     private Double longitude;
     private String imageUrl;
     
+    // Geo-verification
+    private Boolean geoVerified;
+    private String verificationNote;
+    
     // Flattened user info
     private Long citizenId;
     private String citizenName;

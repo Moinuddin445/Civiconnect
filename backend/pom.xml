@@ -93,6 +93,13 @@
 			<version>20231013</version>
 		</dependency>
 
+		<!-- EXIF Metadata Extraction (Geo-Verification) -->
+		<dependency>
+			<groupId>com.drewnoakes</groupId>
+			<artifactId>metadata-extractor</artifactId>
+			<version>2.19.0</version>
+		</dependency>
+
 		<!-- Utilities -->
 		<dependency>
 			<groupId>org.modelmapper</groupId>

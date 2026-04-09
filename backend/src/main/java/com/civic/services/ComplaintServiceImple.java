@@ -37,10 +37,13 @@ public class ComplaintServiceImple implements ComplaintService {
     @Autowired
     private ImageHandlingService imageService;
 
+    @Autowired
+    private GeoVerificationService geoVerificationService;
+
     // TODO: @Autowired private EmailService emailService; (Or JavaMailSender logic)
 
     @Override
-    public ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, MultipartFile image) throws IOException {
+    public ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, Double deviceLat, Double deviceLng, MultipartFile image) throws IOException {
         User citizen = userDao.findById(citizenId)
                 .orElseThrow(() -> new ResourceNotFoundException("Citizen not found"));
 
@@ -52,6 +55,10 @@ public class ComplaintServiceImple implements ComplaintService {
             return new ApiResponse("A similar active complaint already exists at this location.");
         }
 
+        // Geo-verification: cross-validate device GPS, map pin, and photo EXIF GPS
+        GeoVerificationService.GeoVerificationResult geoResult =
+                geoVerificationService.verifyComplaintLocation(deviceLat, deviceLng, lat, lng, image);
+
         Complaint complaint = new Complaint();
         complaint.setTitle(title);
         complaint.setDescription(description);
@@ -59,6 +66,10 @@ public class ComplaintServiceImple implements ComplaintService {
         complaint.setStatus(ComplaintStatus.SUBMITTED);
         complaint.setLatitude(lat);
         complaint.setLongitude(lng);
+        complaint.setDeviceLatitude(deviceLat);
+        complaint.setDeviceLongitude(deviceLng);
+        complaint.setGeoVerified(geoResult.isGeoVerified());
+        complaint.setVerificationNote(geoResult.getNote());
         complaint.setCitizen(citizen);
 
         if (image != null && !image.isEmpty()) {
@@ -69,7 +80,9 @@ public class ComplaintServiceImple implements ComplaintService {
         Complaint savedComplaint = complaintDao.save(complaint);
         saveHistory(savedComplaint, ComplaintStatus.SUBMITTED, "Complaint submitted", citizen);
 
-        return new ApiResponse("Complaint submitted successfully!");
+        return new ApiResponse(geoResult.isGeoVerified()
+                ? "Complaint submitted successfully! \u2705 Location verified."
+                : "Complaint submitted. \u26A0\uFE0F Location could not be fully verified: " + geoResult.getNote());
     }
 
     @Override
@@ -185,6 +198,8 @@ public class ComplaintServiceImple implements ComplaintService {
         dto.setLatitude(complaint.getLatitude());
         dto.setLongitude(complaint.getLongitude());
         dto.setImageUrl(complaint.getImageUrl());
+        dto.setGeoVerified(complaint.getGeoVerified());
+        dto.setVerificationNote(complaint.getVerificationNote());
         
         if (complaint.getCitizen() != null) {
             dto.setCitizenId(complaint.getCitizen().getId());

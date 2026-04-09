@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.civic.dao.UserDao;
 import com.civic.pojos.User;
+import com.civic.pojos.UserRoles;
+import com.civic.dto.RegisterUserDTO;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import com.civic.custom_exceptions.AuthException;
 
 import jakarta.transaction.Transactional;
 
@@ -16,6 +20,25 @@ public class AdminServiceImple implements AdminService {
 	
 	//dependency - UserDao
 	@Autowired UserDao userDao;
+	
+	@Autowired
+	private PasswordEncoder encoder;
+	
+	@Override
+	public String createAdmin(RegisterUserDTO adminDetails) {
+		if (userDao.existsByEmail(adminDetails.getEmail())) {
+			throw new AuthException("Email already exists!!");
+		}
+		
+		User newAdmin = new User();
+		newAdmin.setName(adminDetails.getName());
+		newAdmin.setEmail(adminDetails.getEmail());
+		newAdmin.setPassword(encoder.encode(adminDetails.getPassword()));
+		newAdmin.setRole(UserRoles.ROLE_ADMIN);
+		
+		userDao.save(newAdmin);
+		return "Admin safely created successfully.";
+	}
 	
 	@Override
 	public User getUserById(long userId) {
