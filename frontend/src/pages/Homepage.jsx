@@ -10,6 +10,10 @@ import {
   ArrowRight,
   Sparkles,
   Zap,
+  MapPin,
+  Activity,
+  CheckCircle,
+  BarChart3,
 } from "lucide-react";
 import HomeNavbar from "../components/HomeNavbar";
 
@@ -47,7 +51,7 @@ const Homepage = () => {
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 rounded mb-6">
               <Sparkles className="w-4 h-4 text-blue-600" />
               <span className="text-sm text-gray-700 font-medium">
-                Empowering Communities Since 2025
+                100% Geo-Verified Reporting
               </span>
             </div>
             <h1 className="text-5xl md:text-7xl font-bold text-black mb-6 leading-tight">
@@ -55,15 +59,14 @@ const Homepage = () => {
               <span className="text-blue-600 font-bold">CivicConnect</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-8 leading-relaxed">
-              Your digital platform to connect with local government, manage
-              civic services, and build stronger communities together.
+              The smartest way to report infrastructure issues, schedule trash pickups, and track municipal action with total transparency.
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="/signup"
                 className="group flex items-center gap-2 px-8 py-3.5 bg-blue-600 from-blue-500 to-blue-600 text-black font-semibold rounded-xl hover:shadow-xl hover:shadow transition-all duration-300 hover:-translate-y-1"
               >
-                Get Started Free
+                Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </a>
               <a
@@ -106,28 +109,44 @@ const Homepage = () => {
         </div>
       </div>
 
-      {/* Stats Section */}
+      {/* Modern Process Steps Overlapping Section */}
       <div className="max-w-7xl mx-auto px-6 -mt-16 relative z-20">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[
-            { label: "Active Users", value: "2,500+", icon: Users },
-            { label: "Trash Pickups", value: "5,000+", icon: Trash2 },
-            { label: "Sectors Covered", value: "7", icon: Shield },
-          ].map((stat, index) => (
-            <div
-              key={stat.label}
-              className="bg-white border border-gray-300 rounded shadow p-6 rounded-2xl p-5 text-center "
-              style={{ animationDelay: `${index * 0.1}s` }}
-            >
-              <stat.icon className="w-6 h-6 text-blue-600 mx-auto mb-3" />
-              <p className="text-2xl font-bold text-black mb-1">
-                {stat.value}
-              </p>
-              <p className="text-xs text-gray-600 uppercase tracking-wider">
-                {stat.label}
-              </p>
-            </div>
-          ))}
+        <div className="bg-white/80 backdrop-blur-xl border border-white/50 shadow-2xl rounded-3xl p-6 md:p-8 hover:shadow-blue-500/10 transition-all duration-500">
+          <div className="grid md:grid-cols-3 gap-8 divide-y md:divide-y-0 md:divide-x divide-gray-200/60">
+            {[
+              { 
+                title: "1. Report Issue", 
+                desc: "Geo-verified snap & submit", 
+                icon: MapPin, 
+                color: "text-blue-600",
+                bg: "bg-blue-600/10"
+              },
+              { 
+                title: "2. Live Tracking", 
+                desc: "Monitor officer assignment", 
+                icon: Activity, 
+                color: "text-amber-600",
+                bg: "bg-amber-500/10"
+              },
+              { 
+                title: "3. Swift Resolution", 
+                desc: "City infrastructure improved", 
+                icon: CheckCircle, 
+                color: "text-green-600",
+                bg: "bg-green-500/10"
+              },
+            ].map((step, index) => (
+              <div key={index} className="flex items-center gap-5 pt-6 md:pt-0 md:px-8 first:pt-0 first:pl-0 last:pr-0 group cursor-default">
+                <div className={`w-14 h-14 rounded-2xl ${step.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-sm`}>
+                  <step.icon className={`w-6 h-6 ${step.color}`} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-gray-900 mb-1">{step.title}</h3>
+                  <p className="text-sm text-gray-500 font-medium">{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
@@ -135,59 +154,69 @@ const Homepage = () => {
       <div className="max-w-7xl mx-auto px-6 py-24">
         <div className="text-center mb-16 ">
           <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-            Everything you need in{" "}
-            <span className="text-blue-600 font-bold">one place</span>
+            Built for{" "}
+            <span className="text-blue-600 font-bold">Accountability</span>
           </h2>
           <p className="text-gray-600 max-w-xl mx-auto">
-            Streamline your civic interactions with our comprehensive suite of
-            tools
+            Experience the future of civic management with tools designed to solve real problems, faster.
           </p>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6">
           <FeatureCard
-            title="Trash Pickup"
-            description="Schedule and track waste collection services. Get notified about service dates and manage requests effortlessly."
-            icon={<Trash2 className="w-7 h-7" />}
+            title="Verified Reporting"
+            description="Report potholes, broken lights, and hazards. Our strict GPS and camera verification guarantees the authenticity of every issue."
+            icon={<MapPin className="w-7 h-7" />}
             color="orange"
             delay={0}
           />
           <FeatureCard
-            title="Community Events"
-            description="Register events, get permits approved, and stay updated with local community activities and gatherings."
-            icon={<Calendar className="w-7 h-7" />}
+            title="Executive Analytics"
+            description="Empower city planners with macro-level insights. Visualize resolution rates, sector-by-sector performance, and advanced infrastructure metrics."
+            icon={<BarChart3 className="w-7 h-7" />}
             color="teal"
             delay={0.1}
           />
           <FeatureCard
-            title="Smart Management"
-            description="Manage all your civic needs through a single intelligent platform with real-time updates and notifications."
-            icon={<Zap className="w-7 h-7" />}
+            title="Total Transparency"
+            description="Direct dispatch to sector officers. Track resolution timestamps and immutable status logs for holding authorities accountable."
+            icon={<Shield className="w-7 h-7" />}
             color="amber"
             delay={0.2}
           />
         </div>
       </div>
 
-      {/* CTA Section */}
+      {/* Premium CTA Section */}
       <div className="max-w-7xl mx-auto px-6 pb-24">
-        <div className="relative overflow-hidden rounded-3xl p-12 md:p-16 text-center bg-white border border-gray-300 rounded shadow p-6 animate-pulse-glow">
-          <div className="absolute inset-0 bg-blue-500 from-blue-500/10 to-blue-600/5"></div>
+        <div className="relative overflow-hidden rounded-[2.5rem] p-12 md:p-20 text-center bg-gradient-to-br from-gray-900 via-[#0f172a] to-blue-950 shadow-2xl transform hover:scale-[1.01] transition-all duration-500 group">
+          {/* Advanced abstract glows */}
+          <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-500/20 via-transparent to-transparent"></div>
+          <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[radial-gradient(circle,_var(--tw-gradient-stops))] from-teal-500/20 via-transparent to-transparent rounded-full blur-[80px] group-hover:scale-110 transition-transform duration-700"></div>
+          
           <div className="relative z-10">
-            <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
-              Ready to get connected?
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+              Ready to build a <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-teal-300">better city?</span>
             </h2>
-            <p className="text-gray-600 max-w-lg mx-auto mb-8">
-              Join thousands of citizens already using CivicConnect to engage
-              with their local government.
+            <p className="text-blue-100/70 max-w-2xl mx-auto mb-10 text-lg leading-relaxed">
+              Join leading municipalities and verified citizens already using 
+              CivicConnect to seamlessly transform their local neighborhoods.
             </p>
-            <a
-              href="/signup"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-blue-600 from-blue-500 to-blue-600 text-black font-semibold rounded-xl hover:shadow-xl hover:shadow transition-all duration-300 hover:-translate-y-1"
-            >
-              Create Your Free Account
-              <ArrowRight className="w-5 h-5" />
-            </a>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <a
+                href="/signup"
+                className="inline-flex items-center gap-3 px-10 py-4 bg-white text-blue-950 text-lg font-bold rounded-2xl hover:bg-gray-100 hover:-translate-y-1 hover:shadow-[0_0_40px_rgba(255,255,255,0.2)] transition-all duration-300"
+              >
+                Create Your Account
+                <ArrowRight className="w-5 h-5" />
+              </a>
+              <a
+                href="/signin"
+                className="inline-flex items-center gap-3 px-10 py-4 bg-white/10 text-white border border-white/20 text-lg font-bold rounded-2xl hover:bg-white/20 transition-all duration-300 backdrop-blur-md"
+              >
+                Sign In
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -217,19 +246,22 @@ const Homepage = () => {
 const FeatureCard = ({ title, description, icon, color, delay }) => {
   const colorMap = {
     orange: {
-      bg: "from-blue-500/20 to-orange-500/5",
-      icon: "text-blue-600",
-      border: "group-hover:border-orange-500/30",
+      bg: "bg-orange-50/80",
+      icon: "text-orange-600",
+      border: "group-hover:border-orange-300",
+      glow: "group-hover:shadow-orange-500/20",
     },
     teal: {
-      bg: "from-teal-500/20 to-teal-500/5",
-      icon: "text-green-600",
-      border: "group-hover:border-teal-500/30",
+      bg: "bg-teal-50/80",
+      icon: "text-teal-600",
+      border: "group-hover:border-teal-300",
+      glow: "group-hover:shadow-teal-500/20",
     },
     amber: {
-      bg: "from-gray-900mber-500/20 to-blue-600/5",
-      icon: "text-yellow-600",
-      border: "group-hover:border-amber-500/30",
+      bg: "bg-amber-50/80",
+      icon: "text-amber-600",
+      border: "group-hover:border-amber-300",
+      glow: "group-hover:shadow-amber-500/20",
     },
   };
 
@@ -237,16 +269,19 @@ const FeatureCard = ({ title, description, icon, color, delay }) => {
 
   return (
     <div
-      className={`group bg-white border border-gray-300 rounded shadow p-6 rounded-2xl p-8  ${colors.border}`}
+      className={`group relative bg-white border border-gray-200 rounded-3xl p-8 hover:-translate-y-2 hover:shadow-2xl transition-all duration-500 overflow-hidden cursor-default ${colors.border} ${colors.glow}`}
       style={{ animationDelay: `${delay}s` }}
     >
+      {/* Decorative gradient orb for hover */}
+      <div className={`absolute -right-16 -top-16 w-48 h-48 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity duration-700 ${colors.bg}`}></div>
+      
       <div
-        className={`w-14 h-14 rounded-2xl bg-blue-500 ${colors.bg} flex items-center justify-center mb-6 ${colors.icon} group-hover:scale-110 transition-transform duration-300`}
+        className={`relative z-10 w-16 h-16 rounded-2xl ${colors.bg} flex items-center justify-center mb-8 ${colors.icon} group-hover:scale-110 group-hover:-rotate-3 transition-transform duration-500 border border-white shadow-sm`}
       >
         {icon}
       </div>
-      <h3 className="text-xl font-semibold text-black mb-3">{title}</h3>
-      <p className="text-gray-600 leading-relaxed text-sm">{description}</p>
+      <h3 className="relative z-10 text-2xl font-bold text-gray-900 mb-3">{title}</h3>
+      <p className="relative z-10 text-gray-600 leading-relaxed text-base">{description}</p>
     </div>
   );
 };

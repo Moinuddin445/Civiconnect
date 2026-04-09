@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AlertCircle, MapPin, Clock, FileText, CheckCircle, Package } from "lucide-react";
+import { AlertCircle, MapPin, Clock, FileText, CheckCircle, Package, ShieldCheck, ShieldAlert } from "lucide-react";
 
 const getStatusBadge = (status) => {
   switch (status) {
@@ -94,6 +94,7 @@ const ComplaintTracking = () => {
                   <th className="px-6 py-4">Category</th>
                   <th className="px-6 py-4">Date</th>
                   <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4">Verified</th>
                   <th className="px-6 py-4 text-center">Action</th>
                 </tr>
               </thead>
@@ -105,6 +106,17 @@ const ComplaintTracking = () => {
                     <td className="px-6 py-4">{c.category}</td>
                     <td className="px-6 py-4">{new Date(c.createdAt).toLocaleDateString()}</td>
                     <td className="px-6 py-4">{getStatusBadge(c.status)}</td>
+                    <td className="px-6 py-4">
+                      {c.geoVerified ? (
+                        <span title={c.verificationNote || "Location verified"} className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-200 cursor-help">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Verified
+                        </span>
+                      ) : (
+                        <span title={c.verificationNote || "Location not verified"} className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium border border-amber-200 cursor-help">
+                          <ShieldAlert className="w-3.5 h-3.5" /> Unverified
+                        </span>
+                      )}
+                    </td>
                     <td className="px-6 py-4 text-center">
                       <button 
                         onClick={() => handleRowClick(c)}
@@ -130,6 +142,21 @@ const ComplaintTracking = () => {
               <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
                 <MapPin className="w-4 h-4" /> Location: {selectedComplaint.latitude?.toFixed(4)}, {selectedComplaint.longitude?.toFixed(4)}
               </p>
+              {/* Verification status badge */}
+              <div className="mt-2">
+                {selectedComplaint.geoVerified ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-200">
+                    <ShieldCheck className="w-3.5 h-3.5" /> Geo-Verified
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium border border-amber-200">
+                    <ShieldAlert className="w-3.5 h-3.5" /> Unverified
+                  </span>
+                )}
+              </div>
+              {selectedComplaint.verificationNote && (
+                <p className="text-xs text-gray-400 mt-1 italic">{selectedComplaint.verificationNote}</p>
+              )}
             </div>
             <button onClick={() => setSelectedComplaint(null)} className="text-gray-400 hover:text-gray-600 p-2">
               &times;

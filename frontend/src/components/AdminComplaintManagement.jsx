@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { AlertCircle, FileText, CheckCircle, Package, MapPin, Clock } from "lucide-react";
+import { AlertCircle, FileText, CheckCircle, Package, MapPin, Clock, ShieldCheck, ShieldAlert } from "lucide-react";
 
 const getStatusBadge = (status) => {
   switch (status) {
@@ -112,8 +112,8 @@ const AdminComplaintManagement = () => {
                   <th className="px-6 py-4">Title</th>
                   <th className="px-6 py-4">Citizen</th>
                   <th className="px-6 py-4">Status</th>
+                  <th className="px-6 py-4">Verified</th>
                   <th className="px-6 py-4">Officer</th>
-                  <th className="px-6 py-4 text-center">Action</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-100">
@@ -123,6 +123,17 @@ const AdminComplaintManagement = () => {
                     <td className="px-6 py-4 font-medium text-gray-900">{c.title}</td>
                     <td className="px-6 py-4">{c.citizenName}</td>
                     <td className="px-6 py-4">{getStatusBadge(c.status)}</td>
+                    <td className="px-6 py-4">
+                      {c.geoVerified ? (
+                        <span title={c.verificationNote || "Location verified"} className="inline-flex items-center gap-1 px-2.5 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-200 cursor-help">
+                          <ShieldCheck className="w-3.5 h-3.5" /> Verified
+                        </span>
+                      ) : (
+                        <span title={c.verificationNote || "Location not verified"} className="inline-flex items-center gap-1 px-2.5 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium border border-amber-200 cursor-help">
+                          <ShieldAlert className="w-3.5 h-3.5" /> Unverified
+                        </span>
+                      )}
+                    </td>
                     <td className="px-6 py-4">{c.assignedOfficerName || <span className="text-gray-400 italic">Unassigned</span>}</td>
                     <td className="px-6 py-4 text-center">
                       <button className="text-blue-600 hover:text-blue-800 text-xs font-medium px-3 py-1 rounded bg-blue-50 hover:bg-blue-100 transition-colors">
@@ -148,6 +159,21 @@ const AdminComplaintManagement = () => {
               <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
                 <MapPin className="w-4 h-4" /> Location: {selectedComplaint.latitude?.toFixed(4)}, {selectedComplaint.longitude?.toFixed(4)}
               </p>
+              {/* Verification Status */}
+              <div className="mt-2 flex items-center gap-2">
+                {selectedComplaint.geoVerified ? (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-medium border border-green-200">
+                    <ShieldCheck className="w-3.5 h-3.5" /> Geo-Verified
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-medium border border-amber-200">
+                    <ShieldAlert className="w-3.5 h-3.5" /> Unverified
+                  </span>
+                )}
+              </div>
+              {selectedComplaint.verificationNote && (
+                <p className="text-xs text-gray-400 mt-1 italic">📋 {selectedComplaint.verificationNote}</p>
+              )}
             </div>
             <button onClick={() => setSelectedComplaint(null)} className="text-gray-400 hover:text-gray-600 p-2 text-xl">
               &times;

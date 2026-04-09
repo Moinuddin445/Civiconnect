@@ -65,7 +65,7 @@ const Signup = () => {
                 <ShieldCheck className="w-3.5 h-3.5" />
                 Account Type
               </label>
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 gap-3">
                 <button
                   type="button"
                   onClick={() => setRole("ROLE_CITIZEN")}
@@ -89,18 +89,6 @@ const Signup = () => {
                 >
                   <ShieldCheck className="w-4 h-4" />
                   Officer
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setRole("ROLE_ADMIN")}
-                  className={`flex items-center justify-center gap-2 p-3 rounded-xl text-sm font-medium transition-all duration-300 ${
-                    role === "ROLE_ADMIN"
-                      ? "bg-blue-600 from-blue-500 to-blue-600 text-black shadow-lg shadow"
-                      : "bg-white border border-gray-200 rounded text-gray-600 hover:text-black hover:border-white/20"
-                  }`}
-                >
-                  <ShieldCheck className="w-4 h-4" />
-                  Admin
                 </button>
               </div>
             </div>
