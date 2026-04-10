@@ -31,7 +31,11 @@ public class GeoVerificationService {
     public GeoVerificationResult verifyComplaintLocation(
             Double deviceLat, Double deviceLng,
             Double mapLat, Double mapLng,
-            MultipartFile image) {
+            MultipartFile image, boolean isDesktop) {
+
+        if (isDesktop) {
+            return new GeoVerificationResult(false, "Unverified: Submitted from a desktop device. Live mobile photo could not be confirmed.");
+        }
 
         // Step 1: Validate device GPS vs map pin distance
         if (deviceLat == null || deviceLng == null || mapLat == null || mapLng == null) {
@@ -48,16 +52,16 @@ public class GeoVerificationService {
 
         // Step 2: Try to extract EXIF GPS from the photo
         if (image == null || image.isEmpty()) {
-            return new GeoVerificationResult(true,
-                    "Device GPS verified (no photo attached for EXIF check).");
+            return new GeoVerificationResult(false,
+                    "Photo is missing. Cannot perform EXIF location verification.");
         }
 
         double[] exifGps = extractExifGps(image);
 
         if (exifGps == null) {
-            // Photo doesn't have GPS metadata — still allow but note it
-            return new GeoVerificationResult(true,
-                    "Device GPS verified. Photo has no GPS metadata (EXIF check skipped).");
+            // Photo doesn't have GPS metadata — flag as unverified
+            return new GeoVerificationResult(false,
+                    "Unverified: Image does not contain the required GPS metadata. May be downloaded from the internet.");
         }
 
         // Step 3: Compare EXIF GPS with map pin

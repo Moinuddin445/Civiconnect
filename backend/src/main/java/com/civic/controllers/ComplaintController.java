@@ -29,13 +29,21 @@ public class ComplaintController {
             @RequestParam(value = "longitude", required = false) Double longitude,
             @RequestParam(value = "deviceLatitude", required = false) Double deviceLatitude,
             @RequestParam(value = "deviceLongitude", required = false) Double deviceLongitude,
-            @RequestParam(value = "image", required = false) MultipartFile image) {
+            @RequestParam(value = "image", required = false) MultipartFile image,
+            @RequestHeader(value = "User-Agent", defaultValue = "") String userAgent) {
         try {
-            ApiResponse response = complaintService.submitComplaint(citizenId, title, description, category, latitude, longitude, deviceLatitude, deviceLongitude, image);
+            boolean isDesktop = isDesktopUserAgent(userAgent);
+            ApiResponse response = complaintService.submitComplaint(citizenId, title, description, category, latitude, longitude, deviceLatitude, deviceLongitude, image, isDesktop);
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error submitting complaint: " + e.getMessage()));
         }
+    }
+
+    private boolean isDesktopUserAgent(String userAgent) {
+        if (userAgent == null || userAgent.isEmpty()) return true;
+        String ua = userAgent.toLowerCase();
+        return !ua.contains("mobi") && !ua.contains("android") && !ua.contains("iphone");
     }
 
     // ALL: Get list with optional filters

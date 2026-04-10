@@ -43,7 +43,7 @@ public class ComplaintServiceImple implements ComplaintService {
     // TODO: @Autowired private EmailService emailService; (Or JavaMailSender logic)
 
     @Override
-    public ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, Double deviceLat, Double deviceLng, MultipartFile image) throws IOException {
+    public ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, Double deviceLat, Double deviceLng, MultipartFile image, boolean isDesktop) throws IOException {
         User citizen = userDao.findById(citizenId)
                 .orElseThrow(() -> new ResourceNotFoundException("Citizen not found"));
 
@@ -57,7 +57,7 @@ public class ComplaintServiceImple implements ComplaintService {
 
         // Geo-verification: cross-validate device GPS, map pin, and photo EXIF GPS
         GeoVerificationService.GeoVerificationResult geoResult =
-                geoVerificationService.verifyComplaintLocation(deviceLat, deviceLng, lat, lng, image);
+                geoVerificationService.verifyComplaintLocation(deviceLat, deviceLng, lat, lng, image, isDesktop);
 
         Complaint complaint = new Complaint();
         complaint.setTitle(title);

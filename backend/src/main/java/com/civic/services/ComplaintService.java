@@ -13,7 +13,7 @@ import java.util.List;
 public interface ComplaintService {
     
     // Citizen methods
-    ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, Double deviceLat, Double deviceLng, MultipartFile image) throws IOException;
+    ApiResponse submitComplaint(Long citizenId, String title, String description, ComplaintCategory category, Double lat, Double lng, Double deviceLat, Double deviceLng, MultipartFile image, boolean isDesktop) throws IOException;
     List<ComplaintRespDTO> getComplaintsByCitizen(Long citizenId);
     
     // Officer methods
